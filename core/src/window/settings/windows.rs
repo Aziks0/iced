@@ -1,7 +1,10 @@
 //! Platform specific settings for Windows.
 
+use crate::Size;
+use crate::window::Icon;
+
 /// The platform specific window settings of an application.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone)]
 pub struct PlatformSpecific {
     /// Drag and drop support
     pub drag_and_drop: bool,
@@ -19,6 +22,9 @@ pub struct PlatformSpecific {
     ///
     /// Supported starting with Windows 11 Build 22000.
     pub corner_preference: CornerPreference,
+
+    /// The icon of the window.
+    pub icon: Option<IconType>,
 }
 
 impl Default for PlatformSpecific {
@@ -28,6 +34,7 @@ impl Default for PlatformSpecific {
             skip_taskbar: false,
             undecorated_shadow: false,
             corner_preference: Default::default(),
+            icon: None,
         }
     }
 }
@@ -56,4 +63,29 @@ pub enum CornerPreference {
     ///
     /// Round the corners if appropriate, with a small radius.
     RoundSmall = 3,
+}
+
+/// Which icon to use.
+#[derive(Debug, Clone)]
+pub enum IconType {
+    /// RGBA icon.
+    Icon(Icon),
+    /// Get the icon from an embedded resource by its ordinal id.
+    ///
+    /// If a size is not given, a default icon size will be picked by Windows.
+    Resource {
+        /// The ordinal id of the resource.
+        ordinal: u16,
+        /// The size of the icon.
+        size: Option<Size<u32>>,
+    },
+    /// Get the icon from an embedded resource by its name.
+    ///
+    /// If a size is not given, a default icon size will be picked by Windows.
+    ResourceName {
+        /// The name of the resource.
+        name: String,
+        /// The size of the icon.
+        size: Option<Size<u32>>,
+    },
 }

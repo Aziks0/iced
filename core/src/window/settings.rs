@@ -25,7 +25,7 @@ mod platform;
 mod platform;
 
 use crate::Size;
-use crate::window::{Icon, Level, Position};
+use crate::window::{Level, Position};
 
 pub use platform::PlatformSpecific;
 
@@ -84,7 +84,8 @@ pub struct Settings {
     pub level: Level,
 
     /// The icon of the window.
-    pub icon: Option<Icon>,
+    #[cfg(not(target_os = "windows"))]
+    pub icon: Option<crate::window::Icon>,
 
     /// Platform specific settings.
     pub platform_specific: PlatformSpecific,
@@ -117,6 +118,7 @@ impl Default for Settings {
             transparent: false,
             blur: false,
             level: Level::default(),
+            #[cfg(not(target_os = "windows"))]
             icon: None,
             exit_on_close_request: true,
             platform_specific: PlatformSpecific::default(),

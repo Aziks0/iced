@@ -51,9 +51,13 @@ pub fn window_attributes(
         .with_decorations(settings.decorations)
         .with_transparent(settings.transparent)
         .with_blur(settings.blur)
-        .with_window_icon(settings.icon.and_then(icon))
         .with_window_level(window_level(settings.level))
         .with_visible(settings.visible);
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        attributes = attributes.with_window_icon(settings.icon.and_then(icon));
+    }
 
     if let Some(position) =
         position(primary_monitor.as_ref(), settings.size, settings.position)
@@ -91,10 +95,47 @@ pub fn window_attributes(
 
     #[cfg(target_os = "windows")]
     {
+        use iced_debug::core::window::settings::platform::IconType;
         use window::settings::platform;
         use winit::platform::windows::{
-            CornerPreference, WindowAttributesExtWindows,
+            CornerPreference, IconExtWindows, WindowAttributesExtWindows,
         };
+
+        /// Converts some [`IconType`] into its `winit` counterpart.
+        ///
+        /// Returns `None` if there is an error during the conversion.
+        pub fn windows_icon(
+            windows_icon: IconType,
+        ) -> Option<winit::window::Icon> {
+            use winit::dpi::PhysicalSize;
+
+            fn size_to_physical_size(
+                size: Size<u32>,
+            ) -> Option<PhysicalSize<u32>> {
+                Some(PhysicalSize {
+                    width: size.width,
+                    height: size.height,
+                })
+            }
+
+            match windows_icon {
+                IconType::Icon(rgba_icon) => icon(rgba_icon),
+                IconType::Resource { ordinal, size } => {
+                    winit::window::Icon::from_resource(
+                        ordinal,
+                        size.and_then(size_to_physical_size),
+                    )
+                    .ok()
+                }
+                IconType::ResourceName { name, size } => {
+                    winit::window::Icon::from_resource_name(
+                        &name,
+                        size.and_then(size_to_physical_size),
+                    )
+                    .ok()
+                }
+            }
+        }
 
         attributes = attributes
             .with_drag_and_drop(settings.platform_specific.drag_and_drop);
@@ -119,6 +160,10 @@ pub fn window_attributes(
                     CornerPreference::RoundSmall
                 }
             },
+        );
+
+        attributes = attributes.with_window_icon(
+            settings.platform_specific.icon.and_then(windows_icon),
         );
     }
 
