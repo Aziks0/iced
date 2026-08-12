@@ -25,6 +25,9 @@ pub struct PlatformSpecific {
 
     /// The icon of the window.
     pub icon: Option<IconType>,
+
+    /// The taskbar icon of the window.
+    pub taskbar_icon: Option<IconType>,
 }
 
 impl Default for PlatformSpecific {
@@ -35,6 +38,7 @@ impl Default for PlatformSpecific {
             undecorated_shadow: false,
             corner_preference: Default::default(),
             icon: None,
+            taskbar_icon: None,
         }
     }
 }

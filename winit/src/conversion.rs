@@ -2,6 +2,7 @@
 //!
 //! [`winit`]: https://github.com/rust-windowing/winit
 //! [`iced_runtime`]: https://github.com/iced-rs/iced/tree/0.14/runtime
+
 use crate::core::input_method;
 use crate::core::keyboard;
 use crate::core::mouse;
@@ -164,6 +165,12 @@ pub fn window_attributes(
 
         attributes = attributes.with_window_icon(
             settings.platform_specific.icon.and_then(windows_icon),
+        );
+        attributes = attributes.with_taskbar_icon(
+            settings
+                .platform_specific
+                .taskbar_icon
+                .and_then(windows_icon),
         );
     }
 
