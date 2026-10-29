@@ -723,7 +723,8 @@ where
             .width(bounds.width)
             .padding(self.padding)
             .font(font)
-            .text_shaping(self.text_shaping);
+            .text_shaping(self.text_shaping)
+            .text_line_height(self.text_line_height);
 
             if let Some(text_size) = self.text_size {
                 menu = menu.text_size(text_size);
