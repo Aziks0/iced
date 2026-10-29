@@ -22,7 +22,16 @@ all-features = true
 maintenance = { status = "actively-developed" }
 
 [features]
-default = ["wgpu", "tiny-skia", "crisp", "web-colors", "thread-pool", "linux-theme-detection", "x11", "wayland"]
+default = [
+    "wgpu",
+    "tiny-skia",
+    "crisp",
+    "web-colors",
+    "thread-pool",
+    "linux-theme-detection",
+    "x11",
+    "wayland",
+]
 # Enables the `wgpu` GPU-accelerated renderer with all its default features (Vulkan, Metal, DX12, OpenGL, and WebGPU)
 wgpu = ["wgpu-bare", "iced_renderer/wgpu"]
 # Enables the `wgpu` GPU-accelerated renderer with the minimum required features (no backends!)
@@ -156,7 +165,7 @@ members = [
 
 [workspace.package]
 # For version `x.y.b-rc.a.b`, use `b` as the fork version.
-version = "0.14.0-rc.0.1"
+version = "0.14.0-rc.0.2"
 authors = ["Héctor Ramón Jiménez <hector@hecrj.dev>"]
 edition = "2024"
 license = "MIT"
@@ -167,24 +176,24 @@ keywords = ["gui", "ui", "graphics", "interface", "widgets"]
 rust-version = "1.88"
 
 [workspace.dependencies]
-iced = { version = "0.14.0-rc.0.1", path = "." }
-iced_beacon = { version = "0.14.0-rc.0.1", path = "beacon" }
-iced_core = { version = "0.14.0-rc.0.1", path = "core" }
-iced_debug = { version = "0.14.0-rc.0.1", path = "debug" }
-iced_devtools = { version = "0.14.0-rc.0.1", path = "devtools" }
-iced_futures = { version = "0.14.0-rc.0.1", path = "futures" }
-iced_graphics = { version = "0.14.0-rc.0.1", path = "graphics" }
-iced_highlighter = { version = "0.14.0-rc.0.1", path = "highlighter" }
-iced_program = { version = "0.14.0-rc.0.1", path = "program" }
-iced_renderer = { version = "0.14.0-rc.0.1", path = "renderer" }
-iced_runtime = { version = "0.14.0-rc.0.1", path = "runtime" }
-iced_selector = { version = "0.14.0-rc.0.1", path = "selector" }
-iced_test = { version = "0.14.0-rc.0.1", path = "test" }
-iced_tester = { version = "0.14.0-rc.0.1", path = "tester" }
-iced_tiny_skia = { version = "0.14.0-rc.0.1", path = "tiny_skia", default-features = false }
-iced_wgpu = { version = "0.14.0-rc.0.1", path = "wgpu", default-features = false }
-iced_widget = { version = "0.14.0-rc.0.1", path = "widget" }
-iced_winit = { version = "0.14.0-rc.0.1", path = "winit", default-features = false }
+iced = { version = "0.14.0-rc.0.2", path = "." }
+iced_beacon = { version = "0.14.0-rc.0.2", path = "beacon" }
+iced_core = { version = "0.14.0-rc.0.2", path = "core" }
+iced_debug = { version = "0.14.0-rc.0.2", path = "debug" }
+iced_devtools = { version = "0.14.0-rc.0.2", path = "devtools" }
+iced_futures = { version = "0.14.0-rc.0.2", path = "futures" }
+iced_graphics = { version = "0.14.0-rc.0.2", path = "graphics" }
+iced_highlighter = { version = "0.14.0-rc.0.2", path = "highlighter" }
+iced_program = { version = "0.14.0-rc.0.2", path = "program" }
+iced_renderer = { version = "0.14.0-rc.0.2", path = "renderer" }
+iced_runtime = { version = "0.14.0-rc.0.2", path = "runtime" }
+iced_selector = { version = "0.14.0-rc.0.2", path = "selector" }
+iced_test = { version = "0.14.0-rc.0.2", path = "test" }
+iced_tester = { version = "0.14.0-rc.0.2", path = "tester" }
+iced_tiny_skia = { version = "0.14.0-rc.0.2", path = "tiny_skia", default-features = false }
+iced_wgpu = { version = "0.14.0-rc.0.2", path = "wgpu", default-features = false }
+iced_widget = { version = "0.14.0-rc.0.2", path = "widget" }
+iced_winit = { version = "0.14.0-rc.0.2", path = "winit", default-features = false }
 
 bincode = "1.3"
 bitflags = "2.0"
@@ -193,7 +202,10 @@ bytes = "1.6"
 cargo-hot = { version = "0.1", package = "cargo-hot-protocol" }
 cosmic-text = "0.15"
 cryoglyph = "0.1"
-futures = { version = "0.3", default-features = false, features = ["std", "async-await"] }
+futures = { version = "0.3", default-features = false, features = [
+    "std",
+    "async-await",
+] }
 glam = "0.25"
 guillotiere = "0.6"
 half = "2.2"
@@ -224,17 +236,25 @@ smol_str = "0.2"
 softbuffer = { version = "0.4", default-features = false }
 sysinfo = "0.33"
 thiserror = "2"
-tiny-skia = { version = "0.11", default-features = false, features = ["std", "simd"] }
+tiny-skia = { version = "0.11", default-features = false, features = [
+    "std",
+    "simd",
+] }
 tokio = "1.0"
 tracing = "0.1"
-two-face = { version = "0.4", default-features = false, features = ["syntect-default-fancy"] }
+two-face = { version = "0.4", default-features = false, features = [
+    "syntect-default-fancy",
+] }
 unicode-segmentation = "1.0"
 url = "2.5"
 wasm-bindgen-futures = "0.4"
 wasmtimer = "0.4.2"
 web-sys = "0.3.69"
 web-time = "1.1"
-wgpu = { version = "27.0", default-features = false, features = ["std", "wgsl"] }
+wgpu = { version = "27.0", default-features = false, features = [
+    "std",
+    "wgsl",
+] }
 window_clipboard = { version = "0.5", default-features = false }
 winit = { version = "0.30", default-features = false, features = ["rwh_06"] }
 
