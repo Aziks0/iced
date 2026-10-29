@@ -605,7 +605,8 @@ where
                         bounds: Rectangle {
                             x: bounds.x + style.border.width,
                             width: bounds.width - style.border.width * 2.0,
-                            ..bounds
+                            y: bounds.y + style.border.width,
+                            height: bounds.height - style.border.width * 2.0,
                         },
                         border: border::rounded(style.border.radius),
                         ..renderer::Quad::default()
