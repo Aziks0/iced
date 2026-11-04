@@ -60,6 +60,7 @@
 //!     }
 //! }
 //! ```
+
 use crate::core::alignment;
 use crate::core::keyboard;
 use crate::core::layout;
@@ -73,7 +74,8 @@ use crate::core::widget::tree::{self, Tree};
 use crate::core::window;
 use crate::core::{
     Background, Border, Clipboard, Color, Element, Event, Layout, Length,
-    Padding, Pixels, Point, Rectangle, Shell, Size, Theme, Vector, Widget,
+    Padding, Pixels, Point, Rectangle, Shadow, Shell, Size, Theme, Vector,
+    Widget,
 };
 use crate::overlay::menu::{self, Menu};
 
@@ -591,6 +593,7 @@ where
             renderer::Quad {
                 bounds,
                 border: style.border,
+                shadow: style.shadow,
                 ..renderer::Quad::default()
             },
             style.background,
@@ -861,6 +864,8 @@ pub struct Style {
     pub background: Background,
     /// The [`Border`] of the pick list.
     pub border: Border,
+    /// The [`Shadow`] of the pick list.
+    pub shadow: Shadow,
 }
 
 /// The theme catalog of a [`PickList`].
@@ -915,6 +920,7 @@ pub fn default(theme: &Theme, status: Status) -> Style {
             width: 1.0,
             color: palette.background.strong.color,
         },
+        shadow: Shadow::default(),
     };
 
     match status {
